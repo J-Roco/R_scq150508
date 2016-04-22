@@ -11,6 +11,11 @@ dataA <- `2015-05-08 Single cell qPCR`
 #Replace those values equal to 999 or 50 (non-amplified) for 40:
 dataA[,2:ncol(dataA)] <- apply(dataA[,2:ncol(dataA)],2,function(x) ifelse(x==50,40,x))
 
+#Subset by timepoint:
+data_day3.0 <- dataA[,grep("Day7|no.cell|bulk",colnames(dataA),invert = T)]
+data_day7.0 <- dataA[,grep("Day3|no.cell|bulk",colnames(dataA),invert = T)]
+
+ 
 #Subset germline transcripts + cMyc + Apex1 + Actb:
 #Targets: c(1,3,5,8,11,14,17,20)
 dataB <- dataA[c(1,3,5,8,11,14,17,15,9,20),]
