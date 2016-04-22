@@ -12,10 +12,45 @@ dataA <- `2015-05-08 Single cell qPCR`
 dataA[,2:ncol(dataA)] <- apply(dataA[,2:ncol(dataA)],2,function(x) ifelse(x==50,40,x))
 
 #Subset by timepoint:
-data_day3.0 <- dataA[,grep("Day7|no.cell|bulk",colnames(dataA),invert = T)]
-data_day7.0 <- dataA[,grep("Day3|no.cell|bulk",colnames(dataA),invert = T)]
+t_data_day3.0 <- t(dataA[,grep("Day7|no.cell|bulk|gene",colnames(dataA),invert = T)])
+t_data_day7.0 <- t(dataA[,grep("Day3|no.cell|bulk|gene",colnames(dataA),invert = T)])
+colnames(t_data_day3.0)<-dataA$gene
+colnames(t_data_day7.0)<-dataA$gene
 
+
+#Boxplots: 
+new.mfrow <- par(mfrow=c(2,4))
+       for (i in 1:22){
+             zz1 <- list(t_data_day3.0[,i],t_data_day7.0[,i])
+           if(i==20) new.lim<-c(12,30)
+           else new.lim<-c(20,40) 
  
+ boxplot(zz1,    
+         outline=F,border="grey 61", col="grey 91", boxwex=0.5,
+         ylab="Cq value",xlab="Subset",
+         cex.lab=1.2,
+         ylim=new.lim,
+         names=c("3.0d","7.0d"))
+       
+ stripchart(zz1[1],
+            vertical=T,method="jitter",add=T,
+            pch=21,cex=1.2,col="black",bg="black")
+ 
+ stripchart(zz1[2],at=2,
+            vertical=T,method="jitter",add=T,
+            pch=21,cex=1.2,col="black",bg="blue")
+ 
+ 
+ plotT<-dataA$gene[i]
+ title(main=plotT,cex.main=1.7)
+}
+
+par(new.mfrow)
+par(pin=c(5,5))
+
+#Save as PDF: size 8 x 15.5 inches
+
+
 #Subset germline transcripts + cMyc + Apex1 + Actb:
 #Targets: c(1,3,5,8,11,14,17,20)
 dataB <- dataA[c(1,3,5,8,11,14,17,15,9,20),]
