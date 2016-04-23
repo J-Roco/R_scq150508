@@ -1,7 +1,7 @@
-#2015-11-16 Single cell qPCR y1 + Actb. 
+#2015-05-08 Single cell qPCR data: 
 
 #Load data:
-#load("~/Desktop/PhD/Results/2015/Single cell PCR/2015-05-08/2015-05-08 Single cell data.RData")
+#load("~/Desktop/PhD/Results/2015/Single cell qPCR/2015-05-08/2015-05-08 Single cell data.RData")
 
 View(`2015-05-08 Single cell qPCR`)
 
