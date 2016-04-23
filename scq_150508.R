@@ -23,22 +23,22 @@ new.mfrow <- par(mfrow=c(2,4))
        for (i in 1:22){
              zz1 <- list(t_data_day3.0[,i],t_data_day7.0[,i])
            if(i==20) new.lim<-c(12,30)
-           else new.lim<-c(20,40) 
+           else new.lim<-c(16,40) 
  
  boxplot(zz1,    
          outline=F,border="grey 61", col="grey 91", boxwex=0.5,
          ylab="Cq value",xlab="Subset",
-         cex.lab=1.2,
+         cex.lab=1,
          ylim=new.lim,
          names=c("3.0d","7.0d"))
        
  stripchart(zz1[1],
             vertical=T,method="jitter",add=T,
-            pch=21,cex=1.2,col="black",bg="black")
+            pch=21,cex=1.5,col="black",bg="blue")
  
  stripchart(zz1[2],at=2,
             vertical=T,method="jitter",add=T,
-            pch=21,cex=1.2,col="black",bg="blue")
+            pch=21,cex=1.5,col="black",bg="red")
  
  
  plotT<-dataA$gene[i]
@@ -48,7 +48,7 @@ new.mfrow <- par(mfrow=c(2,4))
 par(new.mfrow)
 par(pin=c(5,5))
 
-#Save as PDF: size 8 x 15.5 inches
+#Save as PDF: size 7 x 13 inches
 
 
 #Subset germline transcripts + cMyc + Apex1 + Actb:
