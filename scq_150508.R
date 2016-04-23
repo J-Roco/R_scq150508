@@ -50,6 +50,40 @@ par(pin=c(5,5))
 
 #Save as PDF: size 7 x 13 inches
 
+#Subset targets to be plotted:
+hm_day3.0<-t(t_data_day3.0)[c("Actb","IgG1","Ig2b","Ig2C","Igamma3","mlEpsilon2","Im","C-MYC","BCL6","AID","APEX1"),]
+hm_day7.0<-t(t_data_day7.0)[c("Actb","IgG1","Ig2b","Ig2C","Igamma3","mlEpsilon2","Im","C-MYC","BCL6","AID","APEX1"),]
+
+
+#HEAT-MAP:
+library(gplots)
+
+hmap_f1<-function(y){
+ colorRB1 <- colorRampPalette(c("gray51","yellow","darkviolet","black"))
+ 
+ heatmap.2(
+  y[,order(y["Actb",])], Rowv = F, Colv = F, 
+  dendrogram = "none", scale = "none",
+  col = colorRB1,
+  trace = "none",
+  colsep = (1:(ncol(y))), rowsep = (1:(nrow(y))), sepcolor = "black",
+  srtCol = 60, cexCol = 1, cexRow = 1,
+  sepwidth = c(0.01,0.02),
+  adjRow = c(0,0.5),
+  breaks = seq(0,40,0.5),
+  lmat = rbind(c(0,3,3,2,0),
+               c(0,1,1,1,0),
+               c(0,0,0,0,0),
+               c(0,4,0,0,0)),
+  lwid = c(0.5, 1, 1, 1, 0.05), lhei = c(1, 2, lcm(1), 1),
+  density.info = "none",keysize = 0.5)
+}
+
+hmap_f1(hm_day3.0)
+title("3.0d activated B cells", cex.main = 1.5,line = -1.5)
+hmap_f1(hm_day7.0)
+title("7.0d GC B cells", cex.main = 1.5,line = -1.5)
+
 
 #Subset germline transcripts + cMyc + Apex1 + Actb:
 #Targets: c(1,3,5,8,11,14,17,20)
