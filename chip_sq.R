@@ -1,10 +1,13 @@
 #Package ChIPseeker
 library('ChIPseeker')
+library('GenomicRanges')
 
 browseVignettes("ChIPseeker")
+browseVignettes("GenomicRanges")
+
 
 files_example <- getSampleFiles()
-peak_example <- readPeakFile(files[[4]])
+peak_example <- readPeakFile(files_example[[4]])
 covplot(peak_example, weightCol="X8.44")
 
 peak_example=GenomicRanges::GRangesList(CBX6=readPeakFile(files_example[[4]]), CBX7=readPeakFile(files_example[[5]]))
