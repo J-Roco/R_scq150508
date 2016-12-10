@@ -36,6 +36,7 @@ peak_RK051 <- readPeakFile(GSE68349_files[["RK051"]], header = F)
 peak_RK040 <- readPeakFile(GSE68349_files[["RK040"]], header = F)
 peak_RK050 <- readPeakFile(GSE68349_files[["RK050"]], header = F)
 
+#Try this command, for some reason is not working:
 peak_files <- as.list(peak_RK059,peak_RK051,peak_RK040,peak_RK050)
 lapply(GSE68349_files, covplot, weightCol = "V4")
 
@@ -60,19 +61,11 @@ covplot(peak_RK051, weightCol = "V4", chrs = c("chr14", "chr22"), #xlim=c(4.5e7,
 #First we need to create the vector txdb. Call TxDb... package
 
 library('TxDb.Hsapiens.UCSC.hg19.knownGene')
+
 browseVignettes('GenomicFeatures')
 browseVignettes('AnnotationDbi')
 
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-
-#To determine which chromosomes are currently active, use the seqlevels method:
-seqlevels(txdb)
-
-#To make active only Chromosome 1:
-seqlevels(txdb) <- "chr1"
-#To reset back:
-seqlevels(txdb) <- seqlevels0(txdb)
-
 
 promoter <- getPromoters(TxDb = txdb, upstream = 5000, downstream = 4000)
 tagMatrix <- getTagMatrix(peak_RK059, windows = promoter)
@@ -85,8 +78,9 @@ peakHeatmap(peak, TxDb=txdb, upstream=3000, downstream=3000, color="red")
 
 plotAvgProf(tagMatrix, xlim=c(-5000, 4000), xlab="Genomic Region (5'->3')", ylab = "Read Count Frequency")
 
-#Add confident interval to previous function:
-#plotAvgProf(tagMatrix, xlim=c(-3000, 3000), conf = 0.95, resample = 500)
+
+
+#############################
 
 #Peak annotation:
 peakAnno <- annotatePeak(peak_RK059, tssRegion = c(-5000, 3000), TxDb = txdb, annoDb = "org.Hs.eg.db")
@@ -94,7 +88,7 @@ head(as.GRanges(peakAnno))
 
 peakAnno_dataframe <- as.data.frame(peakAnno)
     peakAnno_chr14 <- peakAnno_dataframe[grep('chr14', peakAnno_dataframe$seqnames),]
-
+View(peakAnno_chr14)
 
 # Profile of several ChIP peak data binding to TSS region:
      promoter <- getPromoters(TxDb = txdb, upstream = 3000, downstream = 3000)
