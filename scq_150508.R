@@ -1,12 +1,13 @@
 #2015-05-08 Single cell qPCR data: 
 
 #Load data:
-#load("~/Desktop/PhD/Results/2015/Single cell qPCR/2015-05-08/2015-05-08 Single cell data.RData")
+load("~/Desktop/PhD/Results/2015/Single cell qPCR/2015-05-08/2015-05-08 Single cell data.RData")
 
 View(`2015-05-08 Single cell qPCR`)
 
 #Process data:
 dataA <- `2015-05-08 Single cell qPCR`
+
 
 #Replace those values equal to 999 or 50 (non-amplified) for 40:
 dataA[, 2:ncol(dataA)] <- apply(dataA[,2:ncol(dataA)], 2, function(x) ifelse(x==50, 40, x))
@@ -20,9 +21,10 @@ colnames(t_data_day7.0) <- dataA$gene
 
 
 #Boxplots: 
+
 new.mfrow <- par(mfrow = c(2,4))
-       for (i in 1:22){
-             zz1 <- list(t_data_day3.0[,i], t_data_day7.0[,i])
+    for (i in 1:22){
+          zz1 <- list(t_data_day3.0[,i], t_data_day7.0[,i])
           if(i==20) new.lim <- c(12,30)
                else new.lim <- c(16,40) 
  
@@ -46,8 +48,10 @@ new.mfrow <- par(mfrow = c(2,4))
  title(main = plotT, cex.main = 1.7)
 }
 
+
 par(new.mfrow)
 par(pin = c(5,5))
+
 
 #Save as PDF: size 7 x 13 inches
 
